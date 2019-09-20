@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nutre_vid/ui/searchBar.dart';
 
 class HomePage extends StatefulWidget {
+  
   @override
   _HomePageState createState() => _HomePageState();
 }

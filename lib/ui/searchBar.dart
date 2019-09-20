@@ -12,8 +12,10 @@ final cidadesRecentes = ["Fortaleza"];
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.search),
-        onPressed: () {},
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = "";
+        },
       )
     ];
   }
@@ -26,7 +28,7 @@ final cidadesRecentes = ["Fortaleza"];
         progress: transitionAnimation,
       ),
       onPressed: () {
-        Navigator.pop(context);
+        close(context, null);
       },
     );
   }
@@ -38,10 +40,24 @@ final cidadesRecentes = ["Fortaleza"];
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final listaDeSugestao = query.isEmpty? cidadesRecentes: cidades;
+    final listaDeSugestao = query.isEmpty? cidadesRecentes: cidades.where((p) => p.toLowerCase().startsWith(query)).toList();
     return ListView.builder(itemBuilder: (context, index) => ListTile(
+      onTap: (){
+        Navigator.pop(context);
+      },
       leading: Icon(Icons.location_city),
-      title: Text(listaDeSugestao[index]),
+      title: RichText(text: TextSpan(
+        text: listaDeSugestao[index].substring(0, query.length),
+        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        children: [
+          TextSpan(
+            text: listaDeSugestao[index].substring(query.length),
+            style: TextStyle(color: Colors.grey)
+          )
+        ]
+
+      ),
+      ),
     ),
     itemCount: listaDeSugestao.length,
     );
