@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         key: _bottomNavigationKey,
+        animationDuration: Duration(milliseconds: 200),
         backgroundColor: Colors.blueAccent,
         items: <Widget>[
           Icon(Icons.home, size: 30),
