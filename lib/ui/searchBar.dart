@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 
 class SearchBar extends SearchDelegate<String> {
 final cidades =  [
@@ -63,3 +63,4 @@ final cidadesRecentes = ["Fortaleza"];
     );
   }
 }
+ */

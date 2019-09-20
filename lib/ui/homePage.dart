@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:nutre_vid/ui/searchBar.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 class HomePage extends StatefulWidget {
   
@@ -9,7 +9,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+   var _scaffoldKey = new GlobalKey<ScaffoldState>();
     int _counter = 0;
+    String pesquisa = "";
+    SearchBar searchBar;
 
   void _incrementCounter() {
     setState(() {
@@ -17,23 +20,45 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void onSubmitted(String value) {
+    this.pesquisa = value.toLowerCase();  
+    setState(() => _scaffoldKey.currentState.showSnackBar(
+        new SnackBar(content: new Text('Você escreveu $value!'))));
+        _incrementCounter();
+  }
+
+
+    @override
+  void initState() {
+    searchBar = new SearchBar(
+        inBar: false,
+        hintText: "Pesquisar paciente",
+        buildDefaultAppBar: buildAppBar,
+        setState: setState,
+        onSubmitted: onSubmitted);
+    super.initState();
+  }
+
+    AppBar buildAppBar(BuildContext context) {
+    return new AppBar(
+      title: Text("NutreVid"),
+      actions: [
+        searchBar.getSearchAction(context)
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("NutreVid"),
-          actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed: (){
-            showSearch(context: context, delegate: SearchBar());
-          },)
-        ],
-      ),
+      key: _scaffoldKey,
+      appBar: this.searchBar.build(context),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the button this many times:',
+              'Encontrado $pesquisa',
             ),
             Text(
               '$_counter',
