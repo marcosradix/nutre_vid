@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:nutre_vid/ui/cadastroDieta.dart';
+import 'package:nutre_vid/ui/calculadoraIMC.dart';
 import 'package:nutre_vid/ui/homePage.dart';
 
 void main() => runApp(MyApp());
@@ -34,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final HomePage _home = HomePage();
     final CadastroDietaPage _cadastroDieta = CadastroDietaPage();
+    final CalculadoraImcPage _calculadoraImcPage = CalculadoraImcPage();
 
     Widget _paginaSelecionada(int page) {
       switch (page) {
@@ -41,6 +43,8 @@ class _MyHomePageState extends State<MyHomePage> {
           return _home;
         case 1:
           return _cadastroDieta;
+        case 2:
+          return _calculadoraImcPage;
         default:
           return Center(
             child: Text("$page"),
@@ -56,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
         items: <Widget>[
           Icon(Icons.home, size: 30),
           Icon(Icons.list, size: 30),
-          Icon(Icons.compare_arrows, size: 30),
+          Icon(Icons.computer, size: 30),
           Icon(Icons.contact_phone, size: 30)
         ],
         onTap: (index) {
