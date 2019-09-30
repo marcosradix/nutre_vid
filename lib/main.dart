@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nutre_vid/ui/cadastroDieta.dart';
 import 'package:nutre_vid/ui/calculadoraIMC.dart';
 import 'package:nutre_vid/ui/homePage.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 void main() => runApp(MyApp());
 
@@ -58,10 +59,10 @@ class _MyHomePageState extends State<MyHomePage> {
         animationDuration: Duration(milliseconds: 200),
         backgroundColor: Colors.blueAccent,
         items: <Widget>[
-          Icon(Icons.home, size: 30),
-          Icon(Icons.list, size: 30),
-          Icon(Icons.computer, size: 30),
-          Icon(Icons.contact_phone, size: 30)
+          Icon(MdiIcons.accountPlus, size: 30),
+          Icon(MdiIcons.clipboardTextOutline),//local_dining perm_contact_calenda
+          Icon(MdiIcons.calculator, size: 30),
+          Icon(Icons.mail, size: 30)
         ],
         onTap: (index) {
           setState(() {
