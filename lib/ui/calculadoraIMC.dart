@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CalculadoraImcPage extends StatefulWidget {
+  CalculadoraImcPage();
+
   @override
   _CalculadoraImcState createState() => _CalculadoraImcState();
 }
+
 
 class _CalculadoraImcState extends State<CalculadoraImcPage> {
   var peso = TextEditingController();

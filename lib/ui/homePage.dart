@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
+import 'package:nutre_vid/ui/calculadoraIMC.dart';
+import 'package:nutre_vid/ui/cadastroPaciente.dart';
 
 class HomePage extends StatefulWidget {
   
@@ -68,8 +70,13 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context)=> CadastroPacientePage()),
+          );
+        },
+
+        tooltip: 'Cadastrar',
         child: Icon(Icons.add),
       ), 
     );

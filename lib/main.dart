@@ -13,7 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'NutreVid',
       theme: ThemeData(
+        accentColor: Colors.blue,
         primarySwatch: Colors.blue,
+        cursorColor: Colors.amber
       ),
       home: MyHomePage(title: 'NutreVid'),
     );
@@ -57,12 +59,14 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: CurvedNavigationBar(
         key: _bottomNavigationKey,
         animationDuration: Duration(milliseconds: 200),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.white,
+        color: Colors.blue,
+
         items: <Widget>[
-          Icon(MdiIcons.accountPlus, size: 30),
-          Icon(MdiIcons.clipboardTextOutline),//local_dining perm_contact_calenda
-          Icon(MdiIcons.calculator, size: 30),
-          Icon(Icons.mail, size: 30)
+          Icon(MdiIcons.accountPlus, size: 30, color: Colors.white,),
+          Icon(MdiIcons.clipboardTextOutline, size: 30,color: Colors.white),//local_dining perm_contact_calenda
+          Icon(MdiIcons.calculator, size: 30, color: Colors.white),
+          Icon(Icons.mail, size: 30, color: Colors.white,)
         ],
         onTap: (index) {
           setState(() {
