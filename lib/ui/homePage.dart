@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:nutre_vid/ui/calculadoraIMC.dart';
@@ -43,6 +44,8 @@ class _HomePageState extends State<HomePage> {
 
     AppBar buildAppBar(BuildContext context) {
     return new AppBar(
+      backgroundColor: Colors.black,
+
       title: Text("NutreVid"),
       actions: [
         searchBar.getSearchAction(context)
