@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         accentColor: Colors.blue,
         primarySwatch: Colors.blue,
-        cursorColor: Colors.amber
       ),
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(title: 'NutreVid'),
     );
   }

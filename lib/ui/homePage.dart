@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:nutre_vid/ui/calculadoraIMC.dart';
@@ -78,7 +79,7 @@ class _HomePageState extends State<HomePage> {
 
         tooltip: 'Cadastrar',
         child: Icon(Icons.add),
-      ), 
+      ),
     );
       
     
