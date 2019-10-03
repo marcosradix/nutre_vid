@@ -44,8 +44,6 @@ class _HomePageState extends State<HomePage> {
 
     AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-      backgroundColor: Colors.black,
-
       title: Text("NutreVid"),
       actions: [
         searchBar.getSearchAction(context)
@@ -81,7 +79,7 @@ class _HomePageState extends State<HomePage> {
 
         tooltip: 'Cadastrar',
         child: Icon(Icons.add),
-      ), 
+      ),
     );
       
     
