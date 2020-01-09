@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         key: _bottomNavigationKey,
-        animationDuration: Duration(milliseconds: 200),
+        animationDuration: Duration(milliseconds: 5),
         backgroundColor: Colors.white,
         color: Colors.blue,
 
