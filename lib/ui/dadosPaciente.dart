@@ -16,7 +16,6 @@ import 'package:image_picker/image_picker.dart';
 
 class DadosPacientePage extends StatefulWidget {
   final Paciente paciente;
-  //o parametro entre chaves se torna opcional
   DadosPacientePage({this.paciente});
 
   @override
@@ -44,7 +43,7 @@ class _DadosPacientePageState extends State<DadosPacientePage> {
   String dropDownRaca = 'Branco';
 
   Paciente _editPaciente;
-  bool _userEdited = false;
+  bool _pacienteEditado = false;
 
   //chave global para validar campos
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -118,7 +117,7 @@ class _DadosPacientePageState extends State<DadosPacientePage> {
                         if (value.isEmpty) {return "Insira o nome";}
                       },
                       onChanged: (text){
-                        _userEdited = true;
+                        _pacienteEditado = true;
                         setState(() {
                           _editPaciente.nome = text;
                         });
@@ -144,6 +143,7 @@ class _DadosPacientePageState extends State<DadosPacientePage> {
                               FocusScope.of(context).requestFocus(new FocusNode());
                               DatePicker.showDatePicker(context,
                                   showTitleActions: true,
+                                  locale: LocaleType.pt,
                                   minTime: DateTime(1900, 1, 1),
                                   maxTime: DateTime.now(),
                                   onConfirm: (date) {
@@ -152,11 +152,11 @@ class _DadosPacientePageState extends State<DadosPacientePage> {
                                     _selectedYear = date.year;
                                     _selectedMounth = date.month;
                                     _selectedDay = date.day;
-                                    _userEdited = true;
+                                    _pacienteEditado = true;
                                     calculateAge();
                                   },
                                   currentTime: _selectedYear != null ? DateTime(_selectedYear,_selectedMounth,_selectedDay) :
-                                  DateTime.now().toLocal());
+                                  DateTime(2000,1,1));
                             },
                             inputFormatters:  [WhitelistingTextInputFormatter.digitsOnly, _mascaraDataNascimento]
                         ),
@@ -215,7 +215,7 @@ class _DadosPacientePageState extends State<DadosPacientePage> {
                                     onChanged: (String newValue) {
                                       setState(() {
                                         dropDownSexo = newValue;
-                                        _userEdited = true;
+                                        _pacienteEditado = true;
                                       });
                                     },
                                     items: <String>['Masculino', 'Feminino', 'Outro', ].map<DropdownMenuItem<String>>((String value) {
@@ -258,7 +258,7 @@ class _DadosPacientePageState extends State<DadosPacientePage> {
                                     onChanged: (String newValue) {
                                       setState(() {
                                         dropDownRaca = newValue;
-                                        _userEdited = true;
+                                        _pacienteEditado = true;
                                       });
                                     },
                                     items: <String>['Branco', 'Negro', 'Outro', ].map<DropdownMenuItem<String>>((String value) {
@@ -308,16 +308,20 @@ class _DadosPacientePageState extends State<DadosPacientePage> {
                                        ),
                                      ),
                                      onTap: (){
-                                       ImagePicker.pickImage(source: ImageSource.camera).then((file){
-                                         if(file == null){
-                                           return;
-                                         }else{
-                                           setState(() {
-                                             _userEdited = true;
-                                             _editPaciente.foto = file.path;
-                                           });
-                                         }
-                                       });
+//
+//                                       ImagePicker.pickImage(source: ImageSource.camera).then((file){
+//                                         if(file == null){
+//                                           return;
+//                                         }else{
+//                                           setState(() {
+//                                             _pacienteEditado = true;
+//                                             _editPaciente.foto = file.path;
+//                                           });
+//                                         }
+//                                       });
+
+
+                                       _showOptions(context);
                                      },
                                    ),
                                  ),
@@ -335,7 +339,7 @@ class _DadosPacientePageState extends State<DadosPacientePage> {
                                     padding: EdgeInsets.only(left: 2.0),
                                       child: RaisedButton(
                                         onPressed: () {
-                                          if (_userEdited) {
+                                          if (_pacienteEditado) {
                                             _exibiDialogAlteracao(context);
                                           } else {
                                             Navigator.pop(context);
@@ -379,13 +383,105 @@ class _DadosPacientePageState extends State<DadosPacientePage> {
     );
   }
 
+
   Future<bool> _requestPop(){
-    if(_userEdited){
+    if(_pacienteEditado){
       _exibiDialogAlteracao(context);
       return Future.value(false);
     }else{
       return Future.value(true);
     }
+  }
+
+  Future<void> _getImageCamera() async {
+    await ImagePicker.pickImage(source: ImageSource.camera).then((image) {
+      if (image == null) {
+        return;
+      } else {
+        setState(() {
+          _editPaciente.foto = image.path;
+        });
+      }
+    });
+  }
+  Future<void> _getImageGalery() async {
+    await ImagePicker.pickImage(source: ImageSource.gallery).then((image) {
+      if (image == null) {
+        return;
+      } else {
+        setState(() {
+          _editPaciente.foto = image.path;
+        });
+      }
+    });
+  }
+
+  void _showOptions(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) => BottomSheet(
+          builder: (context) {
+            return Container(
+              alignment: Alignment.center,
+              height: 100,
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Flexible(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child:
+                      FlatButton(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                        child: Column(
+                          children: <Widget>[
+                            Icon(Icons.photo_album),
+                            Text("Galeria",style: TextStyle(color: Colors.white),)
+                          ],
+                        ),
+                        color: Colors.red,
+                        padding: EdgeInsets.all(7.0),
+                        onPressed: () {
+                          _getImageGalery();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                        child: Column(
+                          children: <Widget>[
+                            Icon(Icons.photo_camera),
+                            Text(
+                              "Camera",
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ],
+                        ),
+                        color: Colors.blue,
+                        padding: EdgeInsets.all(7.0),
+                        onPressed: () {
+                          _getImageCamera();
+                          Navigator.pop(context);
+
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+          onClosing: () {},
+        ));
   }
 
   _exibiDialogAlteracao(context){
@@ -411,6 +507,8 @@ class _DadosPacientePageState extends State<DadosPacientePage> {
       );
   }
 }
+
+
 
 String _validacaoData(String value) {
   if (value.isEmpty) {
