@@ -53,9 +53,7 @@ class _HomePageState extends State<HomePage> {
         colorBackButton: true,
         onClosed: onClosed,
       );
-
       super.initState();
-
   }
 
     AppBar buildAppBar(BuildContext context) {
@@ -72,15 +70,27 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: this.searchBar.build(context),
-      body: Center(
-        child:ListView.builder(
-            itemCount: pacientes.length,
-            padding: EdgeInsets.all(10.0),
-            itemBuilder: (context, index){
-              return _pacienteCard(context, index);
-            })
+      body:
 
+      RefreshIndicator(
+          onRefresh: _refresh,
+          child: ListView.builder(
+              itemCount: pacientes.length,
+              padding: EdgeInsets.all(10.0),
+              itemBuilder: (context, index){
+                return _pacienteCard(context, index);
+              })
       ),
+
+
+//      Center(
+//        child:ListView.builder(
+//            itemCount: pacientes.length,
+//            padding: EdgeInsets.all(10.0),
+//            itemBuilder: (context, index){
+//              return _pacienteCard(context, index);
+//            })
+//   ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Cadastrar',
         child: Icon(Icons.add),
@@ -89,6 +99,14 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+  }
+
+  Future<Null> _refresh() async{
+    await Future.delayed(Duration(seconds: 1));
+
+    setState(() {
+      _getAllPacientes();
+    });
   }
 
    void _showPacientePage({Paciente paciente}) async{

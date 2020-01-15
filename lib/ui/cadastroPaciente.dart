@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:nutre_vid/helpers/paciente_helper.dart';
-import 'package:nutre_vid/ui/calculadoraIMC.dart';
+import 'package:nutre_vid/ui/cadastroDieta.dart';
 import 'package:nutre_vid/ui/dadosPaciente.dart';
 
 
@@ -28,7 +28,7 @@ class _CadastroPacientePageState extends State<CadastroPacientePage> {
   @override
   Widget build(BuildContext context) {
     final DadosPacientePage _dadosPaciente = DadosPacientePage(paciente: widget.paciente,);
-    final CalculadoraImcPage _calculadoraImcPage = CalculadoraImcPage();
+    final CadastroDietaPage _dietaPage = CadastroDietaPage();
 
     return DefaultTabController(
       length: 2,
@@ -52,15 +52,11 @@ class _CadastroPacientePageState extends State<CadastroPacientePage> {
           child: TabBarView(
             children: [
               _dadosPaciente,
-              _calculadoraImcPage
+              _dietaPage
             ],
           ),
         ),
       ),
     );
-
-
-
-
   }
 }
